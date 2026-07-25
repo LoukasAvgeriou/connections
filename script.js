@@ -33,6 +33,7 @@ let selectedWords = [];
 let solvedGroups = [];
 let mistakes = 0;
 let gameFinished = false;
+const previousAttempts = new Set();
 
 function renderBoard() {
   gameBoard.innerHTML = "";
@@ -105,6 +106,10 @@ function shuffleWords() {
   renderBoard();
 }
 
+function getSelectionKey() {
+  return [...selectedWords].sort().join("|");
+}
+
 function isOneAway() {
   return groups.some((group) => {
     if (solvedGroups.includes(group)) {
@@ -131,6 +136,15 @@ function revealRemainingGroups() {
 }
 
 function submitSelection() {
+  const selectionKey = getSelectionKey();
+
+  if (previousAttempts.has(selectionKey)) {
+    message.textContent = "Έχεις ήδη δοκιμάσει αυτή την ομάδα.";
+    selectedWords = [];
+    renderBoard();
+    return;
+  }
+
   const correctGroup = groups.find(
     (group) =>
       !solvedGroups.includes(group) &&
@@ -154,6 +168,7 @@ function submitSelection() {
       message.textContent = "Συγχαρητήρια! Έλυσες το παιχνίδι!";
     }
   } else {
+    previousAttempts.add(selectionKey);
     mistakes++;
 
     if (isOneAway()) {
