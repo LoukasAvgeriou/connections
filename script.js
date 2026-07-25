@@ -1,22 +1,22 @@
 const groups = [
   {
-    category: "ΑΡΧΑΙΟΙ ΕΛΛΗΝΕΣ ΦΙΛΟΣΟΦΟΙ",
-    words: ["ΣΩΚΡΑΤΗΣ", "ΠΛΑΤΩΝ", "ΖΗΝΩΝ", "ΕΠΙΚΟΥΡΟΣ"],
+    category: "ΠΤΗΝΑ",
+    words: ["ΚΑΝΑΡΙΝΙ", "ΑΕΤΟΣ", "ΣΠΟΥΡΓΙΤΙ", "ΧΕΛΙΔΟΝΙ"],
     color: "yellow"
   },
   {
-    category: "ΕΛΛΗΝΙΚΑ ΝΗΣΙΑ",
-    words: ["ΝΑΞΟΣ", "ΚΡΗΤΗ", "ΡΟΔΟΣ", "ΙΚΑΡΙΑ"],
+    category: "ΔΗΜΟΙ ΑΤΤΙΚΗΣ",
+    words: ["ΜΑΡΟΥΣΙ", "ΠΕΡΙΣΤΕΡΙ", "ΗΛΙΟΥΠΟΛΗ", "ΚΟΡΥΔΑΛΛΟΣ"],
     color: "green"
   },
   {
-    category: "ΧΡΩΜΑΤΑ",
-    words: ["ΚΟΚΚΙΝΟ", "ΜΠΛΕ", "ΠΡΑΣΙΝΟ", "ΚΙΤΡΙΝΟ"],
+    category: "ΑΚΛΙΤΕΣ ΛΕΞΕΙΣ",
+    words: ["ΑΙΓΑΛΕΩ", "ΣΤΥΛΟ", "ΑΒΟΚΑΝΤΟ", "ΑΛΦΑ"],
     color: "blue"
   },
   {
-    category: "ΗΜΕΡΕΣ ΤΗΣ ΕΒΔΟΜΑΔΑΣ",
-    words: ["ΔΕΥΤΕΡΑ", "ΤΡΙΤΗ", "ΤΕΤΑΡΤΗ", "ΠΕΜΠΤΗ"],
+    category: "ΛΕΞΕΙΣ ΠΟΥ ΓΡΑΦΟΝΤΑΙ ΔΙΑΦΟΡΕΤΙΚΑ ΚΑΙ ΕΧΟΥΝ ΑΛΛΗ ΣΗΜΑΣΙΑ",
+    words: ["ΣΥΚΟ", "ΛΥΡΑ", "ΚΛΗΜΑ", "ΠΙΑΝΟ"],
     color: "purple"
   }
 ];
@@ -105,9 +105,36 @@ function shuffleWords() {
   renderBoard();
 }
 
+function isOneAway() {
+  return groups.some((group) => {
+    if (solvedGroups.includes(group)) {
+      return false;
+    }
+
+    const matchingWords = selectedWords.filter((word) =>
+      group.words.includes(word)
+    );
+
+    return matchingWords.length === 3;
+  });
+}
+
+function revealRemainingGroups() {
+  const remainingGroups = groups.filter(
+    (group) => !solvedGroups.includes(group)
+  );
+
+  solvedGroups.push(...remainingGroups);
+  displayedWords = [];
+
+  renderSolvedGroups();
+}
+
 function submitSelection() {
-  const correctGroup = groups.find((group) =>
-    group.words.every((word) => selectedWords.includes(word))
+  const correctGroup = groups.find(
+    (group) =>
+      !solvedGroups.includes(group) &&
+      group.words.every((word) => selectedWords.includes(word))
   );
 
   if (correctGroup) {
@@ -128,12 +155,19 @@ function submitSelection() {
     }
   } else {
     mistakes++;
+
+    if (isOneAway()) {
+      message.textContent = "Απέχεις μία λέξη!";
+    } else {
+      message.textContent = "Δεν είναι σωστή ομάδα.";
+    }
+
     selectedWords = [];
-    message.textContent = "Δεν είναι σωστή ομάδα.";
 
     if (mistakes >= 4) {
       gameFinished = true;
-      message.textContent = "Τέλος παιχνιδιού! Έφτασες τα 4 λάθη.";
+      message.textContent = "Τέλος παιχνιδιού! Οι σωστές ομάδες ήταν:";
+      revealRemainingGroups();
     }
   }
 
