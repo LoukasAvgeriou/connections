@@ -74,3 +74,40 @@ main {
     font-size: 12px;
   }
 }
+
+#solved-groups {
+  display: grid;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.solved-group {
+  display: flex;
+  min-height: 90px;
+  padding: 16px;
+  border-radius: 8px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.solved-group.yellow {
+  background-color: #f9df6d;
+}
+
+.solved-group.green {
+  background-color: #a0c35a;
+}
+
+.solved-group.blue {
+  background-color: #b0c4ef;
+}
+
+.solved-group.purple {
+  background-color: #ba81c5;
+}
+
+#message {
+  min-height: 24px;
+  font-weight: bold;
+}
