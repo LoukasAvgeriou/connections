@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -10,4 +14,63 @@ main {
   max-width: 800px;
   margin: 0 auto;
   padding: 32px 16px;
+}
+
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 32px 0;
+}
+
+.word-card {
+  min-height: 90px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  background-color: #efefe6;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.word-card:hover {
+  background-color: #e2e2d8;
+}
+
+.word-card.selected {
+  background-color: #5a594e;
+  color: white;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  padding: 12px 18px;
+  border: 1px solid #121212;
+  border-radius: 24px;
+  background-color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+@media (max-width: 600px) {
+  #game-board {
+    gap: 6px;
+  }
+
+  .word-card {
+    min-height: 70px;
+    font-size: 12px;
+  }
 }
