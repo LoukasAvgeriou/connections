@@ -16,11 +16,21 @@
 		<div id="game-board"></div>
 
 		<p id="message" aria-live="polite"></p>
-		<p>Λάθη: <span id="mistakes">0</span> / 4</p>
+		<div id="mistakes-container">
+  			<span>Διαθέσιμες προσπάθειες:</span>
+  				<div id="mistake-dots" aria-label="4 διαθέσιμες προσπάθειες"></div>
+		</div>
 
 		<div class="controls">
 			<button id="shuffle-button">Ανακάτεμα</button>
       		<button id="submit-button" disabled>Υποβολή</button>
+      		<button id="restart-button" type="button" hidden>
+  				Παίξε ξανά
+			</button>
+
+			<button id="reveal-button" type="button" hidden>
+  				Εμφάνισε τις σωστές απαντήσεις
+			</button>
 		</div>
 	</main>
 

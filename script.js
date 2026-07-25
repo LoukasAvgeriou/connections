@@ -15,7 +15,7 @@ const groups = [
     color: "blue"
   },
   {
-    category: "ΛΕΞΕΙΣ ΠΟΥ ΓΡΑΦΟΝΤΑΙ ΔΙΑΦΟΡΕΤΙΚΑ ΚΑΙ ΕΧΟΥΝ ΑΛΛΗ ΣΗΜΑΣΙΑ",
+    category: "ΟΜΟΗΧΕΣ ΜΕ ΑΛΛΕΣ ΛΕΞΕΙΣ",
     words: ["ΣΥΚΟ", "ΛΥΡΑ", "ΚΛΗΜΑ", "ΠΙΑΝΟ"],
     color: "purple"
   }
@@ -26,14 +26,42 @@ const solvedGroupsContainer = document.querySelector("#solved-groups");
 const shuffleButton = document.querySelector("#shuffle-button");
 const submitButton = document.querySelector("#submit-button");
 const message = document.querySelector("#message");
-const mistakesElement = document.querySelector("#mistakes");
+const mistakeDots = document.querySelector("#mistake-dots");
+const restartButton = document.querySelector("#restart-button");
+const revealButton = document.querySelector("#reveal-button");
 
 let displayedWords = groups.flatMap((group) => group.words);
 let selectedWords = [];
 let solvedGroups = [];
 let mistakes = 0;
 let gameFinished = false;
+let gameLost = false;
+let answersRevealed = false;
+
 const previousAttempts = new Set();
+
+function renderMistakes() {
+  const remainingMistakes = 4 - mistakes;
+
+  mistakeDots.innerHTML = "";
+
+  for (let i = 0; i < 4; i++) {
+    const dot = document.createElement("span");
+
+    dot.classList.add("mistake-dot");
+
+    if (i < remainingMistakes) {
+      dot.classList.add("available");
+    }
+
+    mistakeDots.appendChild(dot);
+  }
+
+  mistakeDots.setAttribute(
+    "aria-label",
+    `${remainingMistakes} διαθέσιμες προσπάθειες`
+  );
+}
 
 function renderBoard() {
   gameBoard.innerHTML = "";
@@ -58,7 +86,13 @@ function renderBoard() {
 
   shuffleButton.disabled = gameFinished;
 
-  mistakesElement.textContent = mistakes;
+  renderMistakes();
+
+  restartButton.hidden = !gameFinished;
+
+  revealButton.hidden = !gameLost || answersRevealed;
+
+  restartButton.textContent = gameLost ? "Δοκίμασε ξανά" : "Παίξε ξανά";
 }
 
 function renderSolvedGroups() {
@@ -91,7 +125,7 @@ function selectWord(word) {
     selectedWords.push(word);
   }
 
-  message.textContent = "";
+  showMessage("");
   renderBoard();
 }
 
@@ -135,11 +169,23 @@ function revealRemainingGroups() {
   renderSolvedGroups();
 }
 
+function showMessage(text) {
+  message.classList.remove("message-animation");
+  message.textContent = text;
+
+  if (text === "") {
+    return;
+  }
+
+  void message.offsetWidth;
+  message.classList.add("message-animation");
+}
+
 function submitSelection() {
   const selectionKey = getSelectionKey();
 
   if (previousAttempts.has(selectionKey)) {
-    message.textContent = "Έχεις ήδη δοκιμάσει αυτή την ομάδα.";
+    showMessage("Έχεις ήδη δοκιμάσει αυτό τον συνδυασμό.");
     selectedWords = [];
     renderBoard();
     return;
@@ -159,38 +205,66 @@ function submitSelection() {
     );
 
     selectedWords = [];
-    message.textContent = "Σωστή ομάδα!";
+    showMessage("Σωστά!");
 
     renderSolvedGroups();
 
     if (solvedGroups.length === groups.length) {
       gameFinished = true;
-      message.textContent = "Συγχαρητήρια! Έλυσες το παιχνίδι!";
+      showMessage("Συγχαρητήρια! Τα κατάφερες!");
     }
   } else {
     previousAttempts.add(selectionKey);
     mistakes++;
 
     if (isOneAway()) {
-      message.textContent = "Απέχεις μία λέξη!";
+      showMessage("3 στα 4 είναι σωστά");
     } else {
-      message.textContent = "Δεν είναι σωστή ομάδα.";
+      showMessage("Λάθος");
     }
 
     selectedWords = [];
 
     if (mistakes >= 4) {
       gameFinished = true;
-      message.textContent = "Τέλος παιχνιδιού! Οι σωστές ομάδες ήταν:";
-      revealRemainingGroups();
+      gameLost = true;
+
+      showMessage("Τέλος παιχνιδιού! Τι θέλεις να κάνεις;");
     }
   }
 
   renderBoard();
 }
 
+function restartGame() {
+  displayedWords = groups.flatMap((group) => group.words);
+  selectedWords = [];
+  solvedGroups = [];
+  mistakes = 0;
+  gameFinished = false;
+  gameLost = false;
+  answersRevealed = false;
+
+  previousAttempts.clear();
+
+  showMessage("");
+  renderSolvedGroups();
+  shuffleWords();
+}
+
+function showCorrectAnswers() {
+  answersRevealed = true;
+
+  revealRemainingGroups();
+  showMessage("Οι σωστές ομάδες ήταν:");
+
+  renderBoard();
+}
+
 shuffleButton.addEventListener("click", shuffleWords);
 submitButton.addEventListener("click", submitSelection);
+restartButton.addEventListener("click", restartGame);
+revealButton.addEventListener("click", showCorrectAnswers);
 
 shuffleWords();
 renderSolvedGroups();

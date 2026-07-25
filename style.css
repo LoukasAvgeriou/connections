@@ -111,3 +111,79 @@ main {
   min-height: 24px;
   font-weight: bold;
 }
+
+#mistakes-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+#mistake-dots {
+  display: flex;
+  gap: 7px;
+}
+
+.mistake-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #d6d6d6;
+  transform: scale(0.65);
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease;
+}
+
+.mistake-dot.available {
+  background-color: #5a594e;
+  transform: scale(1);
+}
+
+.message-animation {
+  animation: message-pop 300ms ease;
+}
+
+.solved-group {
+  animation: reveal-group 400ms ease-out;
+}
+
+@keyframes message-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  60% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes reveal-group {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .message-animation,
+  .solved-group {
+    animation: none;
+  }
+
+  .mistake-dot {
+    transition: none;
+  }
+}
