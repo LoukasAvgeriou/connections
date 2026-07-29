@@ -12,6 +12,10 @@
 	<main>
 		<h1>ΚΟΝΕΞΙΟΝΣ</h1>
 
+		<button id="instructions-button" type="button">
+  			ΠΩΣ ΠΑΙΖΕΤΑΙ;
+		</button>
+
 		<div id="solved-groups"></div>
 		<div id="game-board"></div>
 
@@ -33,6 +37,51 @@
 			</button>
 		</div>
 	</main>
+
+	<dialog id="instructions-dialog">
+  		<div class="instructions-content">
+    		<button
+      			id="close-instructions-button"
+      			class="close-dialog-button"
+      			type="button"
+      			aria-label="Κλείσιμο"
+    		>
+      		×
+    		</button>
+
+    		<h2>Πώς παίζεται</h2>
+
+    		<p>
+     			 Βρες τις τέσσερις ομάδες λέξεων που συνδέονται μεταξύ τους.
+   			</p>
+
+   			<ol>
+      			<li>Επίλεξε τέσσερις λέξεις.</li>
+      			<li>Πάτησε «ΥΠΟΒΟΛΗ».</li>
+      			<li>Αν οι λέξεις ανήκουν στην ίδια ομάδα, η ομάδα λύνεται.</li>
+      			<li>Αν η επιλογή είναι λάθος, χάνεις μία προσπάθεια.</li>
+    		</ol>
+
+   			 <p>
+      			Έχεις συνολικά τέσσερα λάθη μέχρι να τελειώσει το παιχνίδι.
+    		</p>
+
+    		<p class="difficulty-explanation">
+      			Οι κατηγορίες εμφανίζονται από την ευκολότερη προς τη δυσκολότερη:
+    		</p>
+
+    		<div class="difficulty-colors">
+      			<span class="difficulty yellow">Κίτρινη</span>
+      			<span class="difficulty green">Πράσινη</span>
+      			<span class="difficulty blue">Μπλε</span>
+      			<span class="difficulty purple">Μωβ</span>
+    		</div>
+
+    		<button id="start-playing-button" type="button">
+      			ΞΕΚΙΝΑ ΝΑ ΠΑΙΖΕΙΣ
+    		</button>
+  		</div>
+	</dialog>
 
 	<script src="script.js"></script>
 </body>

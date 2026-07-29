@@ -187,3 +187,99 @@ main {
     transition: none;
   }
 }
+
+#instructions-button {
+  padding: 8px 14px;
+  border: 2px solid #5a594e;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #5a594e;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#instructions-button:hover {
+  background-color: #5a594e;
+  color: white;
+}
+
+#instructions-dialog {
+  width: min(90%, 500px);
+  padding: 0;
+  border: none;
+  border-radius: 16px;
+  color: #242424;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+#instructions-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+.instructions-content {
+  position: relative;
+  padding: 32px;
+}
+
+.instructions-content h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.instructions-content li {
+  margin-bottom: 10px;
+}
+
+.close-dialog-button {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.difficulty-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 24px;
+}
+
+.difficulty {
+  flex: 1;
+  min-width: 85px;
+  padding: 8px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.difficulty.yellow {
+  background-color: #f9df6d;
+}
+
+.difficulty.green {
+  background-color: #a0c35a;
+}
+
+.difficulty.blue {
+  background-color: #b0c4ef;
+}
+
+.difficulty.purple {
+  background-color: #ba81c5;
+}
+
+#start-playing-button {
+  display: block;
+  margin: 0 auto;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  background-color: #5a594e;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}

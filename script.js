@@ -30,6 +30,14 @@ const mistakeDots = document.querySelector("#mistake-dots");
 const restartButton = document.querySelector("#restart-button");
 const revealButton = document.querySelector("#reveal-button");
 
+const instructionsButton = document.querySelector("#instructions-button");
+
+const instructionsDialog = document.querySelector("#instructions-dialog");
+
+const closeInstructionsButton = document.querySelector("#close-instructions-button");
+
+const startPlayingButton = document.querySelector("#start-playing-button");
+
 let displayedWords = groups.flatMap((group) => group.words);
 let selectedWords = [];
 let solvedGroups = [];
@@ -268,3 +276,21 @@ revealButton.addEventListener("click", showCorrectAnswers);
 
 shuffleWords();
 renderSolvedGroups();
+
+instructionsButton.addEventListener("click", () => {
+  instructionsDialog.showModal();
+});
+
+closeInstructionsButton.addEventListener("click", () => {
+  instructionsDialog.close();
+});
+
+startPlayingButton.addEventListener("click", () => {
+  instructionsDialog.close();
+});
+
+instructionsDialog.addEventListener("click", (event) => {
+  if (event.target === instructionsDialog) {
+    instructionsDialog.close();
+  }
+});
