@@ -1,25 +1,5 @@
-const groups = [
-  {
-    category: "ΠΤΗΝΑ",
-    words: ["ΚΑΝΑΡΙΝΙ", "ΑΕΤΟΣ", "ΣΠΟΥΡΓΙΤΙ", "ΧΕΛΙΔΟΝΙ"],
-    color: "yellow"
-  },
-  {
-    category: "ΔΗΜΟΙ ΑΤΤΙΚΗΣ",
-    words: ["ΜΑΡΟΥΣΙ", "ΠΕΡΙΣΤΕΡΙ", "ΗΛΙΟΥΠΟΛΗ", "ΚΟΡΥΔΑΛΛΟΣ"],
-    color: "green"
-  },
-  {
-    category: "ΑΚΛΙΤΕΣ ΛΕΞΕΙΣ",
-    words: ["ΑΙΓΑΛΕΩ", "ΣΤΥΛΟ", "ΑΒΟΚΑΝΤΟ", "ΑΛΦΑ"],
-    color: "blue"
-  },
-  {
-    category: "ΟΜΟΗΧΕΣ ΜΕ ΑΛΛΕΣ ΛΕΞΕΙΣ",
-    words: ["ΣΥΚΟ", "ΛΥΡΑ", "ΚΛΗΜΑ", "ΠΙΑΝΟ"],
-    color: "purple"
-  }
-];
+let currentGame = games[games.length - 1];
+let groups = currentGame.groups;
 
 const gameBoard = document.querySelector("#game-board");
 const solvedGroupsContainer = document.querySelector("#solved-groups");
@@ -37,6 +17,11 @@ const instructionsDialog = document.querySelector("#instructions-dialog");
 const closeInstructionsButton = document.querySelector("#close-instructions-button");
 
 const startPlayingButton = document.querySelector("#start-playing-button");
+
+const archiveButton = document.querySelector("#archive-button");
+const archiveDialog = document.querySelector("#archive-dialog");
+const closeArchiveButton = document.querySelector("#close-archive-button");
+const gamesList = document.querySelector("#games-list");
 
 let displayedWords = groups.flatMap((group) => group.words);
 let selectedWords = [];
@@ -269,6 +254,46 @@ function showCorrectAnswers() {
   renderBoard();
 }
 
+function selectGame(gameId) {
+  const selectedGame = games.find((game) => game.id === gameId);
+
+  if (!selectedGame) {
+    return;
+  }
+
+  currentGame = selectedGame;
+  groups = currentGame.groups;
+
+  restartGame();
+  archiveDialog.close();
+}
+
+function renderGamesArchive() {
+  gamesList.innerHTML = "";
+
+  [...games].reverse().forEach((game) => {
+    const gameButton = document.createElement("button");
+
+    gameButton.type = "button";
+    gameButton.classList.add("archive-game-button");
+
+    if (game.id === currentGame.id) {
+      gameButton.classList.add("current-game");
+    }
+
+    gameButton.innerHTML = `
+      <strong>${game.title}</strong>
+      <span>${game.date}</span>
+    `;
+
+    gameButton.addEventListener("click", () => {
+      selectGame(game.id);
+    });
+
+    gamesList.appendChild(gameButton);
+  });
+}
+
 shuffleButton.addEventListener("click", shuffleWords);
 submitButton.addEventListener("click", submitSelection);
 restartButton.addEventListener("click", restartGame);
@@ -292,5 +317,20 @@ startPlayingButton.addEventListener("click", () => {
 instructionsDialog.addEventListener("click", (event) => {
   if (event.target === instructionsDialog) {
     instructionsDialog.close();
+  }
+});
+
+archiveButton.addEventListener("click", () => {
+  renderGamesArchive();
+  archiveDialog.showModal();
+});
+
+closeArchiveButton.addEventListener("click", () => {
+  archiveDialog.close();
+});
+
+archiveDialog.addEventListener("click", (event) => {
+  if (event.target === archiveDialog) {
+    archiveDialog.close();
   }
 });

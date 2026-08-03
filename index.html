@@ -12,9 +12,15 @@
 	<main>
 		<h1>ΚΟΝΕΞΙΟΝΣ</h1>
 
-		<button id="instructions-button" type="button">
-  			ΠΩΣ ΠΑΙΖΕΤΑΙ;
-		</button>
+		<div class="top-menu">
+  			<button id="archive-button" type="button">
+    			ΑΡΧΕΙΟ ΠΑΙΧΝΙΔΙΩΝ
+  			</button>
+
+  			<button id="instructions-button" type="button">
+    			ΠΩΣ ΠΑΙΖΕΤΑΙ;
+  			</button>
+		</div>
 
 		<div id="solved-groups"></div>
 		<div id="game-board"></div>
@@ -83,6 +89,26 @@
   		</div>
 	</dialog>
 
+	<dialog id="archive-dialog">
+  		<div class="archive-content">
+    		<button
+      			id="close-archive-button"
+      			class="close-dialog-button"
+      			type="button"
+      			aria-label="Κλείσιμο"
+    		>
+      			×
+    		</button>
+
+    		<h2>Αρχείο παιχνιδιών</h2>
+
+    		<p>Διάλεξε ένα παιχνίδι:</p>
+
+    		<div id="games-list"></div>
+  		</div>
+	</dialog>
+	
+	<script src="data/games.js"></script>
 	<script src="script.js"></script>
 </body>
 </html>

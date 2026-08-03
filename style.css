@@ -283,3 +283,86 @@ main {
   font-weight: bold;
   cursor: pointer;
 }
+
+.top-menu {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+#archive-button,
+#instructions-button {
+  padding: 8px 14px;
+  border: 2px solid #5a594e;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #5a594e;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#archive-button:hover,
+#instructions-button:hover {
+  background-color: #5a594e;
+  color: white;
+}
+
+#archive-dialog {
+  width: min(90%, 500px);
+  padding: 0;
+  border: none;
+  border-radius: 16px;
+  color: #242424;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+#archive-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+.archive-content {
+  position: relative;
+  padding: 32px;
+}
+
+.archive-content h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+#games-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.archive-game-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #d6d6d6;
+  border-radius: 8px;
+  background-color: white;
+  color: #242424;
+  cursor: pointer;
+}
+
+.archive-game-button:hover {
+  border-color: #5a594e;
+  background-color: #f2f2f2;
+}
+
+.archive-game-button.current-game {
+  border-color: #5a594e;
+  background-color: #ecebe5;
+}
+
+.archive-game-button span {
+  color: #666;
+  font-size: 14px;
+}
