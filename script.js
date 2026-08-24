@@ -23,7 +23,7 @@ const archiveDialog = document.querySelector("#archive-dialog");
 const closeArchiveButton = document.querySelector("#close-archive-button");
 const gamesList = document.querySelector("#games-list");
 
-let displayedWords = groups.flatMap((group) => group.words);
+let displayedWords = getOpeningWords();
 let selectedWords = [];
 let solvedGroups = [];
 let mistakes = 0;
@@ -32,6 +32,34 @@ let gameLost = false;
 let answersRevealed = false;
 
 const previousAttempts = new Set();
+
+function getAllWords() {
+  return groups.flatMap((group) => group.words);
+}
+
+function getOpeningWords() {
+  const allWords = getAllWords();
+  const startingWords = Array.isArray(currentGame.startingWords)
+    ? currentGame.startingWords
+    : [];
+
+  const firstWords = [];
+
+  startingWords.forEach((word) => {
+    if (
+      firstWords.length < 4 &&
+      allWords.includes(word) &&
+      !firstWords.includes(word)
+    ) {
+      firstWords.push(word);
+    }
+  });
+
+  return [
+    ...firstWords,
+    ...allWords.filter((word) => !firstWords.includes(word))
+  ];
+}
 
 function renderMistakes() {
   const remainingMistakes = 4 - mistakes;
@@ -230,7 +258,7 @@ function submitSelection() {
 }
 
 function restartGame() {
-  displayedWords = groups.flatMap((group) => group.words);
+  displayedWords = getOpeningWords();
   selectedWords = [];
   solvedGroups = [];
   mistakes = 0;
@@ -242,7 +270,7 @@ function restartGame() {
 
   showMessage("");
   renderSolvedGroups();
-  shuffleWords();
+  renderBoard();
 }
 
 function showCorrectAnswers() {
@@ -313,7 +341,7 @@ submitButton.addEventListener("click", submitSelection);
 restartButton.addEventListener("click", restartGame);
 revealButton.addEventListener("click", showCorrectAnswers);
 
-shuffleWords();
+renderBoard();
 renderSolvedGroups();
 
 instructionsButton.addEventListener("click", () => {
