@@ -283,7 +283,7 @@ function renderGamesArchive() {
 
     gameButton.innerHTML = `
       <strong>${game.title}</strong>
-      <span>${game.date}</span>
+      <span>${game.date} · ${game.author}</span>
     `;
 
     gameButton.addEventListener("click", () => {

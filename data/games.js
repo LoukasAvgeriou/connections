@@ -1,8 +1,9 @@
 const games = [
   {
     id: "game-1",
-    date: "2026-07-26",
+    date: "26-07-2026",
     title: "Παιχνίδι #1",
+    author: "Loukas Avgeriou / Dimitris Despotidis",
     groups: [
       {
         category: "ΠΤΗΝΑ",
@@ -29,8 +30,9 @@ const games = [
 
   {
     id: "game-2",
-    date: "2026-08-02",
+    date: "02-08-2026",
     title: "Παιχνίδι #2",
+    author: "Nick Ourailoglou",
     groups: [
       {
         category: "ΥΛΙΚΑ ΓΙΑ ΝΤΑΚΟ",
