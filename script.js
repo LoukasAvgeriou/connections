@@ -281,9 +281,23 @@ function renderGamesArchive() {
       gameButton.classList.add("current-game");
     }
 
+    const authorNames = new Intl.ListFormat("el", {
+      style: "long",
+      type: "conjunction"
+    }).format(game.authors);
+
+    const authorLabel =
+      game.authors.length === 1 ? "Συγγραφέας" : "Συγγραφείς";
+
     gameButton.innerHTML = `
-      <strong>${game.title}</strong>
-      <span>${game.date} · ${game.author}</span>
+      <strong class="archive-game-title">${game.title}</strong>
+      <span class="archive-game-meta">
+        <span class="archive-game-date">${game.date}</span>
+
+        <span class="archive-game-author">
+          ${authorLabel}: ${authorNames}
+        </span>
+      </span>
     `;
 
     gameButton.addEventListener("click", () => {

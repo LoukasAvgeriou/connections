@@ -178,6 +178,7 @@ main {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .message-animation,
   .solved-group {
     animation: none;
@@ -340,16 +341,39 @@ main {
 
 .archive-game-button {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
   width: 100%;
   padding: 14px 16px;
   border: 2px solid #d6d6d6;
   border-radius: 8px;
   background-color: white;
   color: #242424;
+  text-align: left;
   cursor: pointer;
+}
+
+.archive-game-title {
+  font-size: 16px;
+}
+
+.archive-game-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  width: 100%;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.archive-game-date {
+  white-space: nowrap;
+}
+
+.archive-game-author {
+  overflow-wrap: anywhere;
 }
 
 .archive-game-button:hover {
